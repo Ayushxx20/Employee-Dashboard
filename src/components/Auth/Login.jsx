@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-const Login = ({ handleLogin }) => {
+const Login = ({ handleLogin, switchToSignup }) => {
 
     // console.log(handleLogin)
 
@@ -56,6 +56,12 @@ const Login = ({ handleLogin }) => {
                           rounded-full py-2 px-5
                          text-xl outline-none bg-emerald-600 cursor-pointer  placeholder:text-white'>Log in</button>
                 </form>
+                <p className='text-white text-center mt-4'>
+                    Don't have an account?
+                    <button onClick={switchToSignup} className='text-emerald-400 ml-2 underline bg-transparent border-none cursor-pointer'>
+                        Sign Up
+                    </button>
+                </p>
             </div>
 
 

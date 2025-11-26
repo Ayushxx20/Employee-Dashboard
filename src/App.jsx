@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Login from './components/Auth/Login'
+import Signup from './components/Auth/Signup'
 import EmployeeDashBoard from './components/Dashboard/EmployeeDashBoard'
 import AdminDashboard from './components/Dashboard/AdminDashboard'
 import { getLocalStorage, setLocalStorage } from './utils/LocalStorage'
@@ -8,6 +9,7 @@ import { AuthContext } from './context/AuthProvider'
 const App = () => {
   const [user, setUser] = useState(null)
   const [loogedInUserData, setloogedInUserData] = useState(null)
+  const [isSignup, setIsSignup] = useState(false)
 
   const [userData, setUserData] = useContext(AuthContext)
 
@@ -84,12 +86,40 @@ const App = () => {
     }
   }
 
+  const handleSignup = (name, email, password) => {
+    const employees = JSON.parse(localStorage.getItem('employees') || '[]')
+    
+    if (employees.find(emp => emp.email === email)) {
+      alert('Email already exists')
+      return
+    }
+
+    const newEmployee = {
+      id: employees.length + 1,
+      name,
+      email,
+      password,
+      taskCount: { active: 0, newTask: 0, completed: 0, failed: 0 },
+      tasks: []
+    }
+
+    employees.push(newEmployee)
+    localStorage.setItem('employees', JSON.stringify(employees))
+    setUserData({ ...userData, employees })
+    alert('Account created successfully! Please login.')
+    setIsSignup(false)
+  }
+
 
 
 
   return (
     <>
-      {!user ? <Login handleLogin={handleLogin} /> : (
+      {!user ? (
+        isSignup ? 
+          <Signup handleSignup={handleSignup} switchToLogin={() => setIsSignup(false)} /> : 
+          <Login handleLogin={handleLogin} switchToSignup={() => setIsSignup(true)} />
+      ) : (
         user === 'admin' ? <AdminDashboard changeUser={setUser} /> : <EmployeeDashBoard changeUser={setUser} data={loogedInUserData} refreshUserData={refreshUserData} />
       )}
     </>
