@@ -2,6 +2,7 @@
 
 import React from 'react'
 
+
 const AcceptTask = ({ data, refreshUserData }) => {
     const updateTaskStatus = (statusUpdate) => {
         const employees = JSON.parse(localStorage.getItem('employees'))
@@ -92,3 +93,4 @@ const AcceptTask = ({ data, refreshUserData }) => {
 }
 
 export default AcceptTask
+

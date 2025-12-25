@@ -46,7 +46,7 @@ const Signup = ({ handleSignup, switchToLogin }) => {
                     </button>
                 </form>
                 <p className='text-white text-center mt-4'>
-                    Already have an account? 
+                    Already have an account?
                     <button onClick={switchToLogin} className='text-emerald-400 ml-2 underline bg-transparent border-none cursor-pointer'>
                         Login
                     </button>
